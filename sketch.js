@@ -137,6 +137,7 @@ class PhysicsWorld {
 
   update() {
     let start_of_curve;
+    let rel_index = 0;
     if (this.blobs.length > 0) {
       start_of_curve = this.blobs[0];
       beginShape();
@@ -155,7 +156,8 @@ class PhysicsWorld {
       }
 
       if (i < this.blobs.length) {
-        if (i % start_of_curve.n == 0) {
+        if ((i - rel_index) % start_of_curve.n == 0) {
+          rel_index = i;
           fill(blob_fill_color);
           strokeWeight(5);
           stroke(blob_stroke_color);
@@ -212,11 +214,12 @@ class Particle {
   }
 }
 class Spring {
-  constructor(particle1, particle2, length, strength) {
+  constructor(particle1, particle2, length, strength, show = false) {
     this.particle1 = particle1;
     this.particle2 = particle2;
     this.length = length;
     this.strength = strength;
+    this.show = show;
   }
 
   update() {
@@ -252,13 +255,15 @@ class Spring {
 
   run() {
     this.update();
-    this.draw();
+    if (this.show) {
+      this.draw();
+    }
   }
 }
 
 const CreateBlob = (x, y, n, r, physicsWorld) => {
-  particles = [];
-  addCilia = random(0, 1) > 0.7;
+  let particles = [];
+  let addCilia = random(0, 1) > 0.7;
 
   for (let i = 0; i < n; i++) {
     let angle = (i * TWO_PI) / n;
@@ -270,7 +275,9 @@ const CreateBlob = (x, y, n, r, physicsWorld) => {
       false
     );
     physicsWorld.addParticle(particle);
+
     physicsWorld.blobs.push({ p: particle, n: n });
+
     particles.push(particle);
     if (addCilia) {
       let cilia = new Particle(
@@ -281,12 +288,12 @@ const CreateBlob = (x, y, n, r, physicsWorld) => {
         false
       );
       physicsWorld.addParticle(cilia);
-      physicsWorld.addSpring(new Spring(particle, cilia, 15, 0.1));
+      physicsWorld.addSpring(new Spring(particle, cilia, n, 0.4, true));
     }
   }
-  if (random(0, 1) > 0.7) {
-    //CreateBlob(x, y, n - 5, r / 2, physicsWorld);
-  }
+  //   if (random(0, 1) > 0.7) {
+  //     //CreateBlob(x, y, n - 5, r / 2, physicsWorld);
+  //   }
   for (let i = 0; i < n; i++) {
     physicsWorld.addSpring(
       new Spring(particles[i], particles[(i + 1) % n], r / 4, 0.2)
@@ -325,9 +332,29 @@ function setup() {
     ["dot1", "dot2"]
   );
 
-  for (let i = 0; i < 15; i++) {
-    let blob = CreateBlob(random(width), random(height), 15, 80, physicsWorld);
+  for (let i = 0; i < 20; i++) {
+    let blob_n = int(random(7, 19));
+    let blob_radius = blob_n * 5;
+    console.log(int(random(10, 20)));
+    CreateBlob(
+      random(width),
+      random(height),
+      blob_n,
+      blob_radius,
+      physicsWorld
+    );
   }
+
+  CreateBlob(width / 2, height / 2, 15, 150, physicsWorld);
+  CreateBlob(width / 2, height / 2, 13, 50, physicsWorld);
+  CreateBlob(width / 2 + 30, height / 2 + 30, 13, 50, physicsWorld);
+
+  CreateBlob(width / 2 - 400, height / 2 - 400, 15, 150, physicsWorld);
+  CreateBlob(width / 2 - 400, height / 2 - 400, 13, 50, physicsWorld);
+  CreateBlob(width / 2 + 50 - 400, height / 2 + 50 - 400, 13, 50, physicsWorld);
+
+  CreateBlob(width / 2, height / 2, 10, 30, physicsWorld);
+  CreateBlob(width / 2 + 0, height / 2 + 50, 8, 20, physicsWorld);
 
   for (let i = 0; i < 200; i++) {
     let particle = new Particle(
@@ -340,7 +367,7 @@ function setup() {
     physicsWorld.addParticle(particle);
   }
   physicsWorld.addInteraction(applyForce(70, 0.5), ["blob"], ["blob"]);
-  physicsWorld.addInteraction(applyForce(40, 1.0), ["blob"], ["blob"]);
+  physicsWorld.addInteraction(applyForce(30, 1.0), ["blob"], ["blob"]);
   physicsWorld.addInteraction(applyForce(400, -0.05), ["blob"], ["blob"]);
 
   physicsWorld.addInteraction(applyForce(50, 0.7), ["dot1"], ["dot1", "blob"]);
