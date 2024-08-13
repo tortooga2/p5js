@@ -323,12 +323,12 @@ function setup() {
 
   // physicsWorld.addInteraction(stayInBounds(width, height, 10 , 1.0), {or: ["dot1"]}, {or: ["dot1", "dot2"]});
   physicsWorld.addInteraction(
-    stayInBounds(width, height, 100, 0.6),
+    stayInBounds(width, height, 100, 0.2),
     ["blob"],
     ["dot1", "dot2"]
   );
   physicsWorld.addInteraction(
-    stayInBounds(width, height, 100, 0.6),
+    stayInBounds(width, height, 100, 0.2),
     ["dot1"],
     ["dot1", "dot2"]
   );
