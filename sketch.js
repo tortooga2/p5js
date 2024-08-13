@@ -369,7 +369,7 @@ function setup() {
   }
   physicsWorld.addInteraction(applyForce(80, 0.5), ["blob"], ["blob"]);
   physicsWorld.addInteraction(applyForce(50, 1.0), ["blob"], ["blob"]);
-  physicsWorld.addInteraction(applyForce(300, -0.01), ["blob"], ["blob"]);
+  physicsWorld.addInteraction(applyForce(300, -0.02), ["blob"], ["blob"]);
 
   physicsWorld.addInteraction(applyForce(100, 0.7), ["dot1"], ["dot1", "blob"]);
   //physicsWorld.addInteraction(applyForce(70, 0.7), ["dot1"], ["dot1"]);
