@@ -308,6 +308,7 @@ let focusedIndex;
 function setup() {
   createCanvas(windowWidth, windowHeight);
   background(100);
+  frameRate(144);
   // blob_fill_color = color('hsb(96, 34%, 94%)');
   // blob_stroke_color = color('hsb(81, 43%, 76%)');
   //dot1_color = color('hsb(356, 29%, 85%)');
