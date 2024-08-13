@@ -316,7 +316,7 @@ function setup() {
   blob_stroke_color = color("hsb(5, 76%, 98%)");
   dot1_color = color("hsb(81, 43%, 79%)");
 
-  physicsWorld = new PhysicsWorld(200);
+  physicsWorld = new PhysicsWorld(150);
 
   //physicsWorld.addInteraction(applyForce(200, -0.2), {or: ["dot2"]}, {or: ["dot2"]});
   // physicsWorld.addInteraction(applyForce(200, -0.2), {or: ["dot1"]}, {or: ["dot1"]});
@@ -367,15 +367,15 @@ function setup() {
     );
     physicsWorld.addParticle(particle);
   }
-  physicsWorld.addInteraction(applyForce(70, 0.5), ["blob"], ["blob"]);
-  physicsWorld.addInteraction(applyForce(30, 1.0), ["blob"], ["blob"]);
-  physicsWorld.addInteraction(applyForce(400, -0.05), ["blob"], ["blob"]);
+  physicsWorld.addInteraction(applyForce(80, 0.5), ["blob"], ["blob"]);
+  physicsWorld.addInteraction(applyForce(50, 1.0), ["blob"], ["blob"]);
+  physicsWorld.addInteraction(applyForce(300, -0.01), ["blob"], ["blob"]);
 
-  physicsWorld.addInteraction(applyForce(50, 0.7), ["dot1"], ["dot1", "blob"]);
-  physicsWorld.addInteraction(applyForce(40, 0.7), ["dot1"], ["dot1"]);
+  physicsWorld.addInteraction(applyForce(100, 0.7), ["dot1"], ["dot1", "blob"]);
+  //physicsWorld.addInteraction(applyForce(70, 0.7), ["dot1"], ["dot1"]);
 
-  physicsWorld.addInteraction(applyForce(100, -0.4), ["dot1"], ["dot1"]);
-  physicsWorld.addInteraction(applyForce(400, -0.03), ["dot1"], ["blob"]);
+  physicsWorld.addInteraction(applyForce(100, -0.2), ["dot1"], ["dot1"]);
+  physicsWorld.addInteraction(applyForce(200, -0.01), ["dot1"], ["blob"]);
 
   console.log(physicsWorld.interactions);
 
