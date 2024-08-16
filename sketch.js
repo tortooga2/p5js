@@ -312,7 +312,9 @@ const CreateBlob = (x, y, n, r, physicsWorld) => {
         false
       );
       physicsWorld.addParticle(cilia);
-      physicsWorld.addSpring(new Spring(particle, cilia, 10, 0.4, true));
+      physicsWorld.addSpring(
+        new Spring(particle, cilia, 10, 0.4, true, blob_stroke_color)
+      );
     }
 
     physicsWorld.blobs.push({
