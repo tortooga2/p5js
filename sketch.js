@@ -14,10 +14,10 @@ var applyForce =
     particles.forEach((p) => {
       let dx = p.x - particle.x;
       let dy = p.y - particle.y;
-      let d = dist(p.x, p.y, particle.x, particle.y);
-      dx /= d * d + 0.1;
-      dy /= d * d + 0.1;
-      if (d < distance) {
+      let d = dx * dx + dy * dy;
+      dx /= d + 0.1;
+      dy /= d + 0.1;
+      if (d < distance * distance) {
         particle.vx -= dx * strength;
         particle.vy -= dy * strength;
       }
@@ -33,10 +33,10 @@ var applyVineForce =
     particles.forEach((p) => {
       let dx = p.x - particle.x;
       let dy = p.y - particle.y;
-      let d = dist(p.x, p.y, particle.x, particle.y);
-      dx /= d * d + 0.1;
-      dy /= d * d + 0.1;
-      if (d < distance) {
+      let d = dx * dx + dy * dy;
+      dx /= d + 0.1;
+      dy /= d + 0.1;
+      if (d < distance * distance) {
         Dx -= dx * strength;
         Dy -= dy * strength;
         count++;
@@ -377,28 +377,28 @@ let focusedIndex;
 function setup() {
   createCanvas(windowWidth, windowHeight);
   background(100);
-  frameRate(144);
+  frameRate(244);
 
   blob_fill_color = color("hsb(354, 59%, 100%)");
   blob_stroke_color = color("hsb(5, 76%, 98%)");
   dot1_color = color("hsb(81, 43%, 79%)");
 
-  physicsWorld = new PhysicsWorld(100);
+  physicsWorld = new PhysicsWorld(50);
 
   physicsWorld.addInteraction(
-    stayInBounds(width, height, 200, 0.5),
+    stayInBounds(width, height, 200, 0.1),
     ["blob"],
     ["dot"]
   );
 
   physicsWorld.addInteraction(
-    stayInBounds(width, height, 200, 0.5),
+    stayInBounds(width, height, 200, 0.1),
     ["dot"],
     ["dot"]
   );
 
   physicsWorld.addInteraction(
-    stayInBounds(width, height, 200, 0.5),
+    stayInBounds(width, height, 200, 0.1),
     ["vine"],
     ["dot"]
   );
@@ -436,9 +436,9 @@ function setup() {
   //   );
   //   physicsWorld.addParticle(particle);
   // }
-  physicsWorld.addInteraction(applyForce(80, 0.5), ["blob"], ["blob"]);
-  physicsWorld.addInteraction(applyForce(50, 1.0), ["blob"], ["blob"]);
-  physicsWorld.addInteraction(applyForce(300, -0.15), ["blob"], ["blob"]);
+  physicsWorld.addInteraction(applyForce(70, 0.5), ["blob"], ["blob"]);
+  physicsWorld.addInteraction(applyForce(30, 1.0), ["blob"], ["blob"]);
+  physicsWorld.addInteraction(applyForce(300, -0.3), ["blob"], ["blob"]);
 
   physicsWorld.addInteraction(applyForce(100, -0.2), ["dot"], ["dot", "blob"]);
   physicsWorld.addInteraction(applyForce(30, 0.7), ["dot"], ["dot"]);
@@ -447,7 +447,13 @@ function setup() {
   physicsWorld.addInteraction(applyForce(200, -0.01), ["dot"], ["blob"]);
 
   for (let i = 0; i < 30; i++) {
-    CreateCoral(random(width), random(height), 20, 30, physicsWorld);
+    CreateCoral(
+      random(width),
+      random(height),
+      int(random(10, 50)),
+      30,
+      physicsWorld
+    );
   }
 
   // CreateCoral(random(width), random(height), 100, 30, physicsWorld);
